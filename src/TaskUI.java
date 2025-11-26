@@ -15,15 +15,22 @@ public class TaskUI {
         System.out.print("ID: ");
         int id = in.nextInt();
         in.nextLine();
-        System.out.print("Title: ");
+        System.out.print("Title (leave empty to skip): ");
         String title = in.nextLine();
-        System.out.print("Description: ");
+        if (title.isEmpty()) title = null;
+        System.out.print("Description (leave empty to skip): ");
         String desc = in.nextLine();
-        System.out.print("Status: ");
+        if (desc.isEmpty()) desc = null;
+        System.out.print("Status (leave empty to skip): ");
         String status = in.nextLine();
-        System.out.println(service.updateTask(new Task(id, title, desc, status)));
-        System.out.println("Task updated!");
+        if (status.isEmpty()) status = null;
+        Task updated = service.updateTask(id, title, desc, status);
+        if (updated != null)
+            System.out.println("Task updated: " + updated);
+        else
+            System.out.println("Task not found!");
     }
+
 
     private void deleteTask() {
         System.out.print("ID: ");

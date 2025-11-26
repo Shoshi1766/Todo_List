@@ -26,19 +26,34 @@ public class TaskRepository {
 
     public Task addTask(Task task) {
         tasks.add(task);
+        saveToFile("data.json");
         return task;
     }
 
-    public Task updateTask(Task updatedTask) {
-        for (Task task : tasks)
-            if (task.getId() == updatedTask.getId()) {
-                task.setTitle(updatedTask.getTitle());
-                task.setDescription(updatedTask.getDescription());
-                task.setStatus(updatedTask.getStatus());
+    public Task updateTask(int id, String title, String description, String status) {
+        for (Task task : tasks) {
+            if (task.getId() == id) {
+                if (title != null && !title.trim().isEmpty()) {
+                    task.setTitle(title);
+                }
+                if (description != null && !description.trim().isEmpty()) {
+                    task.setDescription(description);
+                }
+                if (status != null && !status.trim().isEmpty()) {
+                    try {
+                        task.setStatus(Status.valueOf(status.toUpperCase()));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid status. Keeping old status.");
+                    }
+                }
+
+                saveToFile("data.json");
                 return task;
             }
+        }
         return null;
     }
+
 
     public Task deleteTask(int id) {
         Iterator<Task> iterator = tasks.iterator();
@@ -46,6 +61,7 @@ public class TaskRepository {
             Task task = iterator.next();
             if (task.getId() == id) {
                 iterator.remove();
+                saveToFile("data.json");
                 return task;
             }
         }
@@ -149,5 +165,41 @@ public class TaskRepository {
             }
         }
     }
+
+    private String escapeJson(String text) {
+        return text.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
+    private void saveToFile(String fileName) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[\n");
+
+        for (int i = 0; i < tasks.size(); i++) {
+            Task t = tasks.get(i);
+
+            sb.append("  {\n");
+            sb.append("    \"id\": ").append(t.getId()).append(",\n");
+            sb.append("    \"title\": \"").append(escapeJson(t.getTitle())).append("\",\n");
+            sb.append("    \"description\": \"").append(escapeJson(t.getDescription())).append("\",\n");
+            sb.append("    \"status\": \"")
+                    .append(escapeJson(t.getStatus().name()))
+                    .append("\"\n");
+            sb.append("  }");
+
+            if (i < tasks.size() - 1) {
+                sb.append(",");
+            }
+            sb.append("\n");
+        }
+
+        sb.append("]");
+
+        try {
+            Files.write(Paths.get(fileName), sb.toString().getBytes());
+        } catch (IOException e) {
+            System.out.println("Error writing JSON file: " + e.getMessage());
+        }
+    }
+
 
 }

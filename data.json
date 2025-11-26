@@ -21,6 +21,12 @@
     "id": 4,
     "title": "Prepare presentation \"Weekly Report\"",
     "description": "Create slides for the weekly meeting: charts, summary, and notes. Status intentionally wrong to test!",
-    "status": "INVALID_STATUS"
+    "status": "NEW"
+  },
+  {
+    "id": 5,
+    "title": "יי",
+    "description": "חימוש שלי",
+    "status": "IN_PROGRESS"
   }
 ]

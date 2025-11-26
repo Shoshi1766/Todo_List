@@ -18,8 +18,8 @@ public class TaskService {
         return task;
     }
 
-    public Task updateTask(Task updatedTask) {
-        return repository.updateTask(updatedTask);
+    public Task updateTask(int id,String title, String description, String status) {
+        return repository.updateTask(id,title,description,status);
     }
 
     public Task deleteTask(int id) {
