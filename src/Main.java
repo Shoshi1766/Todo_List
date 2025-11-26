@@ -1,13 +1,24 @@
 import java.util.Scanner;
 import java.util.List;
 
+/**
+ * Main class for running the Todo List application.
+ * Provides a console menu to interact with tasks.
+ */
 public class Main {
+    /**
+     * Main entry point of the application.
+     * Initializes repository and service, then starts a console menu loop.
+     *
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
-            TaskRepository repository = new TaskRepository("data.json");
-            TaskService service = new TaskService(repository);
+        TaskRepository repository = new TaskRepository("data.json"); // Load tasks from JSON
+        TaskService service = new TaskService(repository); // Initialize service layer
         Scanner in = new Scanner(System.in);
-
+        int choice = -1;
         while (true) {
+            // Display menu header with colored text and heart symbol
             System.out.print("\u001B[31mMy-\u001B[0m");
             System.out.print("\u001B[32mTodo-\u001B[0m");
             System.out.print("\u001B[34mList \u001B[0m");
@@ -21,15 +32,21 @@ public class Main {
             System.out.println("7. Find tasks by title/description");
             System.out.println("8. Sort tasks by status");
             System.out.println("0. Exit");
-            System.out.print("Choose option: ");
 
-            int choice = in.nextInt();
+            // Read valid menu choice
+            String input = "null";
+            while (!input.matches("-?\\d+")) {
+                System.out.print("Choose option: ");
+                input = in.next();
+            }
+            choice = Integer.parseInt(input);
             in.nextLine();
-
             switch (choice) {
                 case 1:
+                    // List all tasks
                     System.out.println(service.listAllTasks());
                     break;
+                // Add a new task
                 case 2:
                     System.out.print("Title: ");
                     String title = in.nextLine();
@@ -38,8 +55,13 @@ public class Main {
                     System.out.println(service.addTask(new Task(title, desc)));
                     break;
                 case 3:
-                    System.out.print("ID: ");
-                    int id = in.nextInt();
+                    // Update existing task by ID
+                    input = "null";
+                    while (!input.matches("-?\\d+")) {
+                        System.out.print("ID: ");
+                        input = in.next();
+                    }
+                    int id = Integer.parseInt(input);
                     in.nextLine();
                     System.out.print("Title (leave empty to skip): ");
                     String newTitle = in.nextLine();
@@ -57,8 +79,13 @@ public class Main {
                         System.out.println("Task not found!");
                     break;
                 case 4:
-                    System.out.print("ID: ");
-                    int delId = in.nextInt();
+                    // Delete task by ID
+                    input = "null";
+                    while (!input.matches("-?\\d+")) {
+                        System.out.print("ID: ");
+                        input = in.next();
+                    }
+                    int delId = Integer.parseInt(input);
                     in.nextLine();
                     Task deleted = service.deleteTask(delId);
                     if (deleted != null)
@@ -67,8 +94,13 @@ public class Main {
                         System.out.println("Task not found!");
                     break;
                 case 5:
-                    System.out.print("ID: ");
-                    int findId = in.nextInt();
+                    // Find task by ID
+                    input = "null";
+                    while (!input.matches("-?\\d+")) {
+                        System.out.print("ID: ");
+                        input = in.next();
+                    }
+                    int findId = Integer.parseInt(input);
                     in.nextLine();
                     Task found = service.getTaskById(findId);
                     if (found != null)
@@ -77,8 +109,13 @@ public class Main {
                         System.out.println("Task not found!");
                     break;
                 case 6:
-                    System.out.print("Task ID to mark as DONE: ");
-                    int doneId = in.nextInt();
+                    // Mark task as DONE
+                    input = "null";
+                    while (!input.matches("-?\\d+")) {
+                        System.out.print("ID: ");
+                        input = in.next();
+                    }
+                    int doneId = Integer.parseInt(input);
                     in.nextLine();
                     Task doneTask = service.updateTaskToDone(doneId);
                     if (doneTask != null)
@@ -87,6 +124,7 @@ public class Main {
                         System.out.println("Task not found!");
                     break;
                 case 7:
+                    // Search tasks by title or description
                     System.out.print("Search text: ");
                     String search = in.nextLine();
                     List<Task> foundTasks = service.findTaskByTitleOrDescription(search);
@@ -96,6 +134,7 @@ public class Main {
                         foundTasks.forEach(System.out::println);
                     break;
                 case 8:
+                    // Sort tasks by status and display
                     List<Task> sorted = service.sortTasksByStatus();
                     if (sorted.isEmpty())
                         System.out.println("Tasks not found!");
@@ -103,6 +142,7 @@ public class Main {
                         sorted.forEach(System.out::println);
                     break;
                 case 0:
+                    // Exit application
                     System.out.println("Exiting...");
                     in.close();
                     return;

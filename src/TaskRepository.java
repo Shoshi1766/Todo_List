@@ -6,11 +6,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * Repository layer for storing and managing tasks.
+ * Handles reading/writing tasks from/to JSON file.
+ */
 public class TaskRepository {
 
     private final List<Task> tasks = new ArrayList<>();
 
+    /**
+     * Constructor loads tasks from JSON file.
+     *
+     * @param jsonName JSON file path.
+     */
     public TaskRepository(String jsonName) {
         try {
             String json = new String(Files.readAllBytes(Paths.get(jsonName)));
@@ -20,16 +30,34 @@ public class TaskRepository {
         }
     }
 
+    /**
+     * Returns all tasks in the repository.
+     *
+     * @return List of tasks.
+     */
     public List<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Adds a new task and saves to JSON file.
+     *
+     * @param task Task to add.
+     * @return The added task.
+     */
     public Task addTask(Task task) {
         tasks.add(task);
         saveToFile("data.json");
         return task;
     }
-
+    /**
+     * Updates an existing task by ID.
+     * @param id Task ID.
+     * @param title New title (nullable to skip update).
+     * @param description New description (nullable to skip update).
+     * @param status New status (nullable to skip update).
+     * @return Updated task or null if not found.
+     */
     public Task updateTask(int id, String title, String description, String status) {
         for (Task task : tasks) {
             if (task.getId() == id) {
@@ -54,7 +82,11 @@ public class TaskRepository {
         return null;
     }
 
-
+    /**
+     * Deletes a task by ID and updates the JSON file.
+     * @param id Task ID to delete.
+     * @return Deleted task or null if not found.
+     */
     public Task deleteTask(int id) {
         Iterator<Task> iterator = tasks.iterator();
         while (iterator.hasNext()) {
@@ -67,7 +99,11 @@ public class TaskRepository {
         }
         return null;
     }
-
+    /**
+     * Finds a task by its ID.
+     * @param id Task ID.
+     * @return Task if found, else null.
+     */
     public Task getTaskById(int id) {
         for (Task task : tasks)
             if (task.getId() == id)
@@ -75,6 +111,10 @@ public class TaskRepository {
         return null;
     }
 
+    /**
+     * Returns a formatted string listing all tasks.
+     * @return String representation of all tasks.
+     */
     public String listAllTasks() {
         StringBuilder sb = new StringBuilder("List all tasks:\n");
         for (Task task : tasks) {
@@ -82,7 +122,11 @@ public class TaskRepository {
         }
         return sb.toString();
     }
-
+    /**
+     * Parses a JSON object into a Task instance.
+     * @param json JSON string representing a task.
+     * @return Task object or null if invalid.
+     */
     private Task parseTask(String json) {
         int id = 0;
         String title = "", description = "", status = "";
@@ -126,10 +170,14 @@ public class TaskRepository {
         }
         return new Task(id, title, description, status);
     }
-
+    /**
+     * Loads multiple tasks from JSON string into repository.
+     * @param json JSON string representing tasks array.
+     */
     private void loadTasks(String json) {
         json = json.trim();
 
+        if (json.isEmpty() || json.equals("[]")) return;
         if (json.startsWith("[")) json = json.substring(1);
         if (json.endsWith("]")) json = json.substring(0, json.length() - 1);
 
@@ -165,11 +213,18 @@ public class TaskRepository {
             }
         }
     }
-
+    /**
+     * Escapes special characters in a string for JSON.
+     * @param text Input text.
+     * @return Escaped string.
+     */
     private String escapeJson(String text) {
         return text.replace("\\", "\\\\").replace("\"", "\\\"");
     }
-
+    /**
+     * Saves current tasks to JSON file.
+     * @param fileName File path to save tasks.
+     */
     private void saveToFile(String fileName) {
         StringBuilder sb = new StringBuilder();
         sb.append("[\n");
@@ -195,7 +250,7 @@ public class TaskRepository {
         sb.append("]");
 
         try {
-            Files.write(Paths.get(fileName), sb.toString().getBytes());
+            Files.write(Paths.get(fileName), sb.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             System.out.println("Error writing JSON file: " + e.getMessage());
         }

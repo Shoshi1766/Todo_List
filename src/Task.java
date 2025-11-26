@@ -1,3 +1,6 @@
+/**
+ * Represents a task object with ID, title, description, and status.
+ */
 public class Task {
     private static int counter = 0;
     private int id;
@@ -5,12 +8,18 @@ public class Task {
     private String description;
     private Status status;
 
+    /**
+     * Constructor for new tasks with default status NEW.
+     */
     public Task(String title, String description) {
         this.id = ++counter;
         this.title = title;
         this.description = description;
         this.status=Status.NEW;
     }
+    /**
+     * Constructor with specified status.
+     */
     public Task(String title, String description, String status) {
         this.id = ++counter;
         this.title = title;
@@ -18,10 +27,12 @@ public class Task {
         try {
             this.status = Status.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid status: " + status + ". Defaulting to NEW.");
             this.status = Status.NEW;
         }
     }
+    /**
+     * Constructor with specified ID (used when loading from JSON).
+     */
     protected Task(int id, String title, String description, String status){
         this.id = id;
         this.title = title;
@@ -29,11 +40,12 @@ public class Task {
         try {
             this.status = Status.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid status: " + status + ". Defaulting to NEW.");
             this.status = Status.NEW;
         }
         if (id > counter) counter = id;
     }
+
+    // Getters and setters...
     public static int getCounter() {
         return counter;
     }
@@ -63,12 +75,8 @@ public class Task {
     }
 
     public void setStatus(Status status) {
-        try {
             this.status = status;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid status: " + status + ". Status not changed.");
         }
-    }
     public Status getStatus() {
         return status;
     }

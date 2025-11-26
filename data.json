@@ -1,32 +1,32 @@
 [
   {
     "id": 1,
-    "title": "Buy groceries, milk and eggs",
-    "description": "Purchase milk, bread, eggs, and vegetables. Make sure everything fits in the bag!",
+    "title": "Buy groceries",
+    "description": "Purchase milk, bread, and vegetables",
     "status": "NEW"
   },
   {
     "id": 2,
-    "title": "Finish homework (Java, Math)",
-    "description": "Complete the Java assignment; check all methods, loops, and edge cases.",
+    "title": "Finish homework",
+    "description": "Complete math and science assignments",
     "status": "IN_PROGRESS"
   },
   {
     "id": 3,
     "title": "Clean the house",
-    "description": "Living room, kitchen, and bathrooms. Don't forget to vacuum carpets, mop tiles, and wipe surfaces.",
-    "status": "DONE"
-  },
-  {
-    "id": 4,
-    "title": "Prepare presentation \"Weekly Report\"",
-    "description": "Create slides for the weekly meeting: charts, summary, and notes. Status intentionally wrong to test!",
+    "description": "Vacuum and dust all rooms",
     "status": "NEW"
   },
   {
+    "id": 4,
+    "title": "Call the bank",
+    "description": "Inquire about the new credit card offer",
+    "status": "DONE"
+  },
+  {
     "id": 5,
-    "title": "יי",
-    "description": "חימוש שלי",
+    "title": "Read book",
+    "description": "Finish reading the current novel",
     "status": "IN_PROGRESS"
   }
 ]
