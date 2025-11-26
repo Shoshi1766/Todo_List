@@ -11,6 +11,29 @@ public class Task {
         this.description = description;
         this.status=Status.NEW;
     }
+    public Task(String title, String description, String status) {
+        this.id = ++counter;
+        this.title = title;
+        this.description = description;
+        try {
+            this.status = Status.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid status: " + status + ". Defaulting to NEW.");
+            this.status = Status.NEW;
+        }
+    }
+    public Task(int id,String title, String description, String status){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        try {
+            this.status = Status.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid status: " + status + ". Defaulting to NEW.");
+            this.status = Status.NEW;
+        }
+        if (id > counter) counter = id;
+    }
     public static int getCounter() {
         return counter;
     }
@@ -40,13 +63,10 @@ public class Task {
     }
 
     public void setStatus(String status) {
-//        this.status = Status.valueOf(status);
         try {
             this.status = Status.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(
-                    "Invalid status: " + status + ". Allowed values: NEW, IN_PROGRESS, DONE"
-            );
+            System.out.println("Invalid status: " + status + ". Status not changed.");
         }
     }
     public Status getStatus() {
