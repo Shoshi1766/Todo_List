@@ -20,12 +20,16 @@ public class TaskRepository {
         }
     }
 
-    public Task add(Task task) {
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public Task addTask(Task task) {
         tasks.add(task);
         return task;
     }
 
-    public Task update(Task updatedTask) {
+    public Task updateTask(Task updatedTask) {
         for (Task task : tasks)
             if (task.getId() == updatedTask.getId()) {
                 task.setTitle(updatedTask.getTitle());
@@ -36,7 +40,7 @@ public class TaskRepository {
         return null;
     }
 
-    public Task delete(int id) {
+    public Task deleteTask(int id) {
         Iterator<Task> iterator = tasks.iterator();
         while (iterator.hasNext()) {
             Task task = iterator.next();
@@ -48,14 +52,14 @@ public class TaskRepository {
         return null;
     }
 
-    public Task getById(int id) {
+    public Task getTaskById(int id) {
         for (Task task : tasks)
             if (task.getId() == id)
                 return task;
         return null;
     }
 
-    public String listAll() {
+    public String listAllTasks() {
         StringBuilder sb = new StringBuilder("List all tasks:\n");
         for (Task task : tasks) {
             sb.append(task.toString()).append("\n");

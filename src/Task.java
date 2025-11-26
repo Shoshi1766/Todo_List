@@ -79,6 +79,6 @@ public class Task {
 
     @Override
     public String toString(){
-        return "[Id: "+this.id+", Title: "+this.title+", Description: "+this.description+", Status: "+this.status+"]";
+        return "Id: "+this.id+", Title: "+this.title+", Description: "+this.description+", Status: "+this.status;
     }
 }
