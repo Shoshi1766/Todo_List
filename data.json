@@ -28,5 +28,11 @@
     "title": "Read book",
     "description": "Finish reading the current novel",
     "status": "IN_PROGRESS"
+  },
+  {
+    "id": 6,
+    "title": "To Dance",
+    "description": "With Migdal",
+    "status": "NEW"
   }
 ]
