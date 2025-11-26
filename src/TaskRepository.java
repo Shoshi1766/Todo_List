@@ -3,6 +3,7 @@ import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,49 @@ public class TaskRepository {
         }
     }
 
+    public Task add(Task task) {
+        tasks.add(task);
+        return task;
+    }
+
+    public Task update(Task updatedTask) {
+        for (Task task : tasks)
+            if (task.getId() == updatedTask.getId()) {
+                task.setTitle(updatedTask.getTitle());
+                task.setDescription(updatedTask.getDescription());
+                task.setStatus(updatedTask.getStatus());
+                return task;
+            }
+        return null;
+    }
+
+    public Task delete(int id) {
+        Iterator<Task> iterator = tasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getId() == id) {
+                iterator.remove();
+                return task;
+            }
+        }
+        return null;
+    }
+
+    public Task getById(int id) {
+        for (Task task : tasks)
+            if (task.getId() == id)
+                return task;
+        return null;
+    }
+
+    public String listAll() {
+        StringBuilder sb = new StringBuilder("List all tasks:\n");
+        for (Task task : tasks) {
+            sb.append(task.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
     private Task parseTask(String json) {
         int id = 0;
         String title = "", description = "", status = "";
@@ -32,7 +76,6 @@ public class TaskRepository {
 
             if (value == null) continue;
 
-            // המרת escape sequences ל־characters אמיתיים
             if (matcher.group(3) != null) {
                 value = value.replace("\\\"", "\"").replace("\\\\", "\\");
             }
@@ -46,16 +89,21 @@ public class TaskRepository {
                         id = 0;
                     }
                     break;
-                case "title": title = value; break;
-                case "description": description = value; break;
-                case "status": status = value; break;
+                case "title":
+                    title = value;
+                    break;
+                case "description":
+                    description = value;
+                    break;
+                case "status":
+                    status = value;
+                    break;
             }
         }
 
         if (title.isEmpty() && description.isEmpty()) {
             return null;
         }
-
         return new Task(id, title, description, status);
     }
 
@@ -98,16 +146,4 @@ public class TaskRepository {
         }
     }
 
-    public List<Task> getTasks() {
-        return new ArrayList<>(tasks);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Tasks:\n");
-        for (Task task : tasks) {
-            sb.append(task.toString()).append("\n\n");
-        }
-        return sb.toString();
-    }
 }

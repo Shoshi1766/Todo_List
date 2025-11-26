@@ -22,7 +22,7 @@ public class Task {
             this.status = Status.NEW;
         }
     }
-    public Task(int id,String title, String description, String status){
+    protected Task(int id, String title, String description, String status){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -62,9 +62,9 @@ public class Task {
         return description;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         try {
-            this.status = Status.valueOf(status.toUpperCase());
+            this.status = status;
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid status: " + status + ". Status not changed.");
         }
@@ -79,6 +79,6 @@ public class Task {
 
     @Override
     public String toString(){
-        return "Task Details:\nId: "+this.id+"\nTitle: "+this.title+"\nDescription: "+this.description+"\nStatus: "+this.status;
+        return "[Id: "+this.id+", Title: "+this.title+", Description: "+this.description+", Status: "+this.status+"]";
     }
 }
