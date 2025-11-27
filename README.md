@@ -4,8 +4,7 @@ A simple console-based task management application built using Java.
 The app allows users to add, update, delete, and list tasks, persisting them in a JSON file.
 
 ## Screenshot  
-![Weather App Preview](assets/Screenshot.gif)
-
+![Weather App Preview](assets/ScreenshotPreview.gif)
 ## Features
 
 - Add new tasks with a title and description
@@ -23,6 +22,14 @@ The app allows users to add, update, delete, and list tasks, persisting them in 
 
 ## Setup Instructions
 #### 1 Clone the repository  
-```bash
+Open your Java IDE (IntelliJ, Eclipse, etc.).
+
+In the IDE's terminal, clone the repository:
+```sh
 git clone https://github.com/Shoshi1766/Todo_List.git
+```
+Enter the project folder:
+```sh
 cd Todo_List
+```
+Run Main.java as a Java Application to start the Todo List.

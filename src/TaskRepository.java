@@ -72,6 +72,7 @@ public class TaskRepository {
                         task.setStatus(Status.valueOf(status.toUpperCase()));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Invalid status. Keeping old status.");
+                        return null;
                     }
                 }
 

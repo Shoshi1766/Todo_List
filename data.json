@@ -1,11 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "Buy groceries",
-    "description": "Purchase milk, bread, and vegetables",
-    "status": "NEW"
-  },
-  {
     "id": 2,
     "title": "Finish homework",
     "description": "Complete math and science assignments",
@@ -31,8 +25,8 @@
   },
   {
     "id": 6,
-    "title": "To Dance",
-    "description": "With Migdal",
-    "status": "NEW"
+    "title": "Home task from Migdal",
+    "description": "To do list, Algorithms, Design.",
+    "status": "IN_PROGRESS"
   }
 ]
