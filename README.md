@@ -21,7 +21,7 @@ The app allows users to add, update, delete, and list tasks, persisting them in 
 - JSON file for data storage
 
 ## Setup Instructions
-#### 1 Clone the repository  
+#### Clone the repository  
 Open your Java IDE (IntelliJ, Eclipse, etc.).
 
 In the IDE's terminal, clone the repository:
